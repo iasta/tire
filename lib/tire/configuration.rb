@@ -3,7 +3,23 @@ module Tire
   class Configuration
 
     def self.url(value=nil)
-      @url = (value ? value.to_s.gsub(%r|/*$|, '') : nil) || @url || ENV['ELASTICSEARCH_URL'] || "http://localhost:9200"
+      if value
+        @url = case value
+                when String, Symbol
+                  value.to_s.gsub(%r|/*$|, '')
+                else
+                  value
+                end
+      end
+      if @url
+        if @url.respond_to?(:call)
+          @url.call
+        else
+          @url
+        end
+      else
+        ENV['ELASTICSEARCH_URL'] || "http://localhost:9200"
+      end
     end
 
     def self.client(klass=nil)
