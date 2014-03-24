@@ -33,6 +33,16 @@ module Tire
         assert_equal 'http://example.com', Configuration.url
       end
 
+      should "allow dynamic URL via passing a block" do
+        assert_nothing_raised { Configuration.url { 'http://example.com' } }
+        assert_equal 'http://example.com', Configuration.url
+      end
+
+      should "allow dynamic URL via passing a Proc" do
+        assert_nothing_raised { Configuration.url Proc.new { 'http://example.com' } }
+        assert_equal 'http://example.com', Configuration.url
+      end
+
       should "strip trailing slash from the URL" do
         assert_nothing_raised { Configuration.url 'http://slash.com:9200/' }
         assert_equal 'http://slash.com:9200', Configuration.url

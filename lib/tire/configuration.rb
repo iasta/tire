@@ -2,7 +2,7 @@ module Tire
 
   class Configuration
 
-    def self.url(value=nil)
+    def self.url(value=nil, &block)
       if value
         @url = case value
                 when String, Symbol
@@ -10,6 +10,8 @@ module Tire
                 else
                   value
                 end
+      elsif block_given?
+        @url = block
       end
       if @url
         if @url.respond_to?(:call)
