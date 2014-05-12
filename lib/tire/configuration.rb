@@ -59,6 +59,14 @@ module Tire
       end
     end
 
+    def self.timeout(value=nil)
+      if value
+        @timeout = value
+      else
+        @timeout
+      end
+    end
+
   end
 
 end
