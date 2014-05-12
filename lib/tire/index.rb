@@ -178,7 +178,7 @@ module Tire
       payload = AutoFlushingBuffer.new Configuration.http_max_content_length
       payload.on_flush do |buffer|
         if buffer.size > 0
-          post_payload_response = send_payload buffer, options
+          post_payload_response = post_payload buffer, options
         end
       end
       documents.map do |document|
